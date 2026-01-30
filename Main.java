@@ -30,10 +30,18 @@ public class Main {
     System.out.print("Input the secret key: ");
     String key = scanner.nextLine().trim();
 
-    // Validate that key is not empty
-    while (key.isEmpty()) {
-      System.out.print("Key cannot be empty. Please enter a key: ");
-      key = scanner.nextLine().trim();
+    if (method.equals("S")) {
+      // For substitution, key myust be a valid integer 0-255
+      while (!isValidSubstitutionKey(key)) {
+        System.out.print("Invalid key. Please enter a number between 0 and 255: ");
+        key = scanner.nextLine().trim();
+      }
+    } else {
+      // For transposition, key must contain only digits
+      while (!isValidTranspositionKey(key)) {
+        System.out.print("Invalid key. Please enter a key with digits only (e.g., 132): ");
+        key = scanner.nextLine().trim();
+      }
     }
 
     // Ask user for filename
@@ -94,5 +102,26 @@ public class Main {
       System.out.println("Error: Could not write to file '" + outputFilename + "'");
     }
     scanner.close();
+  }
+
+  private static boolean isValidSubstitutionKey(String key) {
+    try {
+      int value = Integer.parseInt(key);
+      return value >= 0 && value <= 255;
+    } catch (NumberFormatException e) {
+      return false;
+    }
+  }
+
+  private static boolean isValidTranspositionKey(String key) {
+    if (key.isEmpty()) {
+      return false;
+    }
+    for (char c : key.toCharArray()) {
+      if (!Character.isDigit(c)) {
+        return false;
+      }
+    }
+    return false;
   }
 }
