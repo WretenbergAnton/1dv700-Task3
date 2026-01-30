@@ -41,6 +41,18 @@ public class Main {
 
     System.out.println("Key received: " + key);
 
+    // Ask user for filename
+    System.out.print("Input the name of the file you want to process: ");
+    String filename = scanner.nextLine().trim();
+
+    // Validate that filename is not empty
+    while (filename.isEmpty()) {
+      System.out.print("Filename cannot be empty. Please enter a filenaem: ");
+      filename = scanner.nextLine().trim();
+    }
+
+    System.out.print("File to process: " + filename);
+
     scanner.close();
   }
 }
