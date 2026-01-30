@@ -46,9 +46,10 @@ public class Main {
       filename = scanner.nextLine().trim();
     }
 
+    // Read the file
+    String content;
     try {
-      String content = FileHandler.readFile(filename);
-      System.out.println("File read successfully. Content length: " + content.length() + "characters");
+      content = FileHandler.readFile(filename);
     } catch (IOException e) {
       System.out.println("Error: Could not read file '" + filename + "'");
       System.out.println("Please make sure the file exists and try again.");
@@ -56,7 +57,42 @@ public class Main {
       return;
     }
 
+    // Process the content based on the method and choice
+    String result;
 
+    if (method.equals("S")) {
+      // Substitution cipher - convert key to integer
+      int keyValue = Integer.parseInt(key);
+
+      if (choice.equals("E")) {
+        result = SubstitutionCipher.encrypt(content, keyValue);
+      } else {
+        result = SubstitutionCipher.decrypt(content, keyValue);
+      }
+    } else {
+      // Transposition cipher
+      if (choice.equals("E")) {
+        result = TranspositionCipher.encrpyts(content, key);
+      } else {
+        result = TranspositionCipher.decrypt(content, key);
+      }
+    }
+
+    // Generate output filename
+    String outputFilename;
+    if (choice.equals("E")) {
+      outputFilename = filename.replace(".txt", "_enc.txt");
+    } else {
+      outputFilename = filename.replace(".txt", "_dec.txt");
+    }
+
+    // Write result to file
+    try {
+      FileHandler.writeFile(outputFilename, result);
+      System.out.println("The file has been " + (choice.equals("E") ? "encrypted" : "decrypted") + " and the results have been saved in the file " + outputFilename);
+    } catch (IOException e) {
+      System.out.println("Error: Could not write to file '" + outputFilename + "'");
+    }
     scanner.close();
   }
 }
