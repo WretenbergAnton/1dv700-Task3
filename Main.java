@@ -1,4 +1,5 @@
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
@@ -15,8 +16,6 @@ public class Main {
       choice = scanner.nextLine().trim().toUpperCase();
     }
 
-    System.out.println("You selected: " + (choice.equals("E") ? "Encrypt" : "Decrypt"));
-
     // Ask user for cipher method
     System.out.print("Do you want to use substitution (S) or transposition (T)? ");
     String method = scanner.nextLine().trim().toUpperCase();
@@ -26,8 +25,6 @@ public class Main {
       System.out.print("Invalid choice. Please enter S or T: ");
       method = scanner.nextLine().trim().toUpperCase();
     }
-
-    System.out.println("You selected: " + (method.equals("S") ? "Substitution" : "Transposition"));
 
     // Ask user for secret key
     System.out.print("Input the secret key: ");
@@ -39,8 +36,6 @@ public class Main {
       key = scanner.nextLine().trim();
     }
 
-    System.out.println("Key received: " + key);
-
     // Ask user for filename
     System.out.print("Input the name of the file you want to process: ");
     String filename = scanner.nextLine().trim();
@@ -51,7 +46,16 @@ public class Main {
       filename = scanner.nextLine().trim();
     }
 
-    System.out.print("File to process: " + filename);
+    try {
+      String content = FileHandler.readFile(filename);
+      System.out.println("File read successfully. Content length: " + content.length() + "characters");
+    } catch (IOException e) {
+      System.out.println("Error: Could not read file '" + filename + "'");
+      System.out.println("Please make sure the file exists and try again.");
+      scanner.close();
+      return;
+    }
+
 
     scanner.close();
   }
