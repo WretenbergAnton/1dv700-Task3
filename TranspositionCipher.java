@@ -1,6 +1,6 @@
 public class TranspositionCipher {
   
-  public static String encrpyts(String text, String key) {
+  public static String encrypt(String text, String key) {
     int numColumns = key.length();
     int numRows = (int) Math.ceil((double) text.length() / numColumns);
 

@@ -1,6 +1,6 @@
 /**
  * Implements a simple substitution cipher
- * Uses an 8-bit key (0-255) to shift characters
+ * Uses an 8-bit key (0-255) to shift alphabetic characters only
  */
 public class SubstitutionCipher {
   public static String encrypt(String text, int key) {
@@ -13,9 +13,18 @@ public class SubstitutionCipher {
     for (int i = 0; i < text.length(); i++) {
       char c = text.charAt(i);
 
-      // Shift the character by the key value
-      char encrypted = (char) ((c + key) % 256);
-      result.append(encrypted);
+      if (Character.isUpperCase(c)) {
+        // Shift uppercase letters (A-Z)
+        char encrypted = (char) (((c - 'A' + key) % 26) + 'A');
+        result.append(encrypted);
+      } else if (Character.isLowerCase(c)){
+        // Shift lowercase letters (a-z)
+        char encrypted = (char) (((c - 'a' + key) % 26) + 'a');
+        result.append(encrypted);
+      } else {
+        // Keep non-alphaetic characters unchanged
+        result.append(c);
+      }
     }
 
     return result.toString();
@@ -31,9 +40,18 @@ public class SubstitutionCipher {
     for (int i = 0; i < text.length(); i++) {
       char c = text.charAt(i);
 
-      // shift the characters back by the key value
-      char decrypted = (char) ((c - key + 256) % 256);
-      result.append(decrypted);
+      if (Character.isUpperCase(c)) {
+        // Shift uppercase letters back (A-Z)
+        char decrypted = (char) (((c - 'A' - key + 26) % 26) + 'A');
+        result.append(decrypted);
+      } else if (Character.isLowerCase(c)) {
+        // Shift uppercase letters back (a-z)
+        char decrypted = (char) (((c - 'a' - key +26) % 26) + 'a');
+        result.append(decrypted);
+      } else {
+        // Keep non-alphabetic characters unchanged
+        result.append(c);
+      }
     }
 
     return result.toString();

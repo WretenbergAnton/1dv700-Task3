@@ -80,7 +80,7 @@ public class Main {
     } else {
       // Transposition cipher
       if (choice.equals("E")) {
-        result = TranspositionCipher.encrpyts(content, key);
+        result = TranspositionCipher.encrypt(content, key);
       } else {
         result = TranspositionCipher.decrypt(content, key);
       }
