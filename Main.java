@@ -17,6 +17,18 @@ public class Main {
 
     System.out.println("You selected: " + (choice.equals("E") ? "Encrypt" : "Decrypt"));
 
+    // Ask user for cipher method
+    System.out.print("Do you want to use substitution (S) or transposition (T)? ");
+    String method = scanner.nextLine().trim().toUpperCase();
+
+    // Validate input
+    while (!method.equals("S") && !method.equals("T")) {
+      System.out.print("Invalid choice. Please enter S or T: ");
+      method = scanner.nextLine().trim().toUpperCase();
+    }
+
+    System.out.println("You selected: " + (method.equals("S") ? "Substitution" : "Transposition"));
+
     scanner.close();
   }
 }
