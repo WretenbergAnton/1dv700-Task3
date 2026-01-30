@@ -29,6 +29,18 @@ public class Main {
 
     System.out.println("You selected: " + (method.equals("S") ? "Substitution" : "Transposition"));
 
+    // Ask user for secret key
+    System.out.print("Input the secret key: ");
+    String key = scanner.nextLine().trim();
+
+    // Validate that key is not empty
+    while (key.isEmpty()) {
+      System.out.print("Key cannot be empty. Please enter a key: ");
+      key = scanner.nextLine().trim();
+    }
+
+    System.out.println("Key received: " + key);
+
     scanner.close();
   }
 }
